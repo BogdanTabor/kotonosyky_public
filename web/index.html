@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A website for kotonosyky.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="kotonosyky">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>kotonosyky</title>
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = null;
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
+
+</head>
+<body>
+<div id="loading">
+  <img src="assets/kotonosyky_loader.png" alt="Kotonosyky Icon" class="shaking-icon" />
+</div>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js"></script>
+  <script>
+    window.addEventListener('load', async function (ev) {
+      var loading = document.querySelector('#loading');
+
+      // Download main.dart.js and initialize the Flutter engine
+      await _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: async function (engineInitializer) {
+          let appRunner = await engineInitializer.initializeEngine({
+            useColorEmoji: true,
+          });
+          // Hide loading screen after initialization
+          loading.style.display = "none";
+          await appRunner.runApp();
+        }
+      });
+    });
+
+    // Detect when the back button is pressed and prevent default
+    history.pushState(null, document.title, location.href);
+    history.back();
+    history.forward();
+    window.onpopstate = function () {
+        history.go(1);
+    };
+  </script>
+
+  <style>
+    /* CSS for the loading screen */
+    #loading {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffff;
+    }
+
+    .shaking-icon {
+      width: 120px;
+      height: 120px;
+      animation: shake 2s linear infinite;
+      transform-origin: 50% 70%;
+    }
+
+    @keyframes shake {
+      0%, 100% {
+        transform: rotateZ(0);
+      }
+      7% {
+        transform: rotateZ(-15deg);
+      }
+      15% {
+        transform: rotateZ(10deg);
+      }
+      25% {
+        transform: rotateZ(-10deg);
+      }
+      35% {
+        transform: rotateZ(6deg);
+      }
+      45% {
+        transform: rotateZ(-4deg);
+      }
+      100% {
+        transform: rotateZ(0);
+      }
+    }
+  </style>
+</body>
+</html>
